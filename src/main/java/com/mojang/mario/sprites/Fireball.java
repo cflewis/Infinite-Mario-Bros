@@ -202,7 +202,8 @@ public class Fireball extends Sprite
 
         boolean blocking = world.level.isBlocking(x, y, xa, ya);
 
-        byte block = world.level.getBlock(x, y);
+        @SuppressWarnings("unused")
+		byte block = world.level.getBlock(x, y);
 
         return blocking;
     }

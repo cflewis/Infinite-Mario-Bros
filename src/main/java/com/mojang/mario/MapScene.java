@@ -24,7 +24,8 @@ public class MapScene extends Scene
     private int xMarioA, yMarioA;
 
     private int tick;
-    private GraphicsConfiguration graphicsConfiguration;
+    @SuppressWarnings("unused")
+	private GraphicsConfiguration graphicsConfiguration;
     private Image staticBg;
     private Graphics staticGr;
     private Random random = new Random();
@@ -105,7 +106,8 @@ public class MapScene extends Scene
             {
                 double xd = ((x + 1) / (double) width - 0.5) * 2;
                 double yd = ((y + 1) / (double) height - 0.5) * 2;
-                double d = Math.sqrt(xd * xd + yd * yd) * 2;
+                @SuppressWarnings("unused")
+				double d = Math.sqrt(xd * xd + yd * yd) * 2;
                 if (x == 0 || y == 0 || x >= width - 3 || y >= height - 3) d = 100;
                 double t0 = n0.perlinNoise(x * 10.0 + xo0, y * 10.0 + yo0);
                 double t1 = n1.perlinNoise(x * 10.0 + xo1, y * 10.0 + yo1);

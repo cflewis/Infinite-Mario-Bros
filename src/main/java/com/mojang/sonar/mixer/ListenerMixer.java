@@ -28,7 +28,7 @@ public class ListenerMixer implements StereoSoundProducer
 
     public void update(float alpha)
     {
-        for (Iterator it = sounds.iterator(); it.hasNext();)
+        for (Iterator<?> it = sounds.iterator(); it.hasNext();)
         {
             Sound sound = (Sound) it.next();
             sound.update(soundListener, alpha);
@@ -39,7 +39,6 @@ public class ListenerMixer implements StereoSoundProducer
         }
     }
 
-    @SuppressWarnings("unchecked")
     public float read(float[] leftBuf, float[] rightBuf, int readRate)
     {
         if (buf.length != leftBuf.length) buf = new float[leftBuf.length];

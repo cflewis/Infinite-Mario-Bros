@@ -3,7 +3,7 @@ package com.mojang.sonar.mixer;
 import com.mojang.sonar.*;
 
 
-public class Sound implements Comparable
+public class Sound implements Comparable<Object>
 {
     private static final double l10 = Math.log(10);
     

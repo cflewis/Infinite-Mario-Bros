@@ -11,10 +11,14 @@ public class Mushroom extends Sprite
 
     private float runTime;
     private boolean onGround = false;
-    private boolean mayJump = false;
-    private int jumpTime = 0;
-    private float xJumpSpeed;
-    private float yJumpSpeed;
+    @SuppressWarnings("unused")
+	private boolean mayJump = false;
+    @SuppressWarnings("unused")
+	private int jumpTime = 0;
+    @SuppressWarnings("unused")
+	private float xJumpSpeed;
+    @SuppressWarnings("unused")
+	private float yJumpSpeed;
 
     private int width = 4;
     int height = 24;
@@ -47,7 +51,7 @@ public class Mushroom extends Sprite
         float xMarioD = world.mario.x - x;
         float yMarioD = world.mario.y - y;
         float w = 16;
-        if (xMarioD > -16 && xMarioD < 16)
+        if (xMarioD > -w && xMarioD < w)
         {
             if (yMarioD > -height && yMarioD < world.mario.height)
             {
@@ -204,7 +208,8 @@ public class Mushroom extends Sprite
 
         boolean blocking = world.level.isBlocking(x, y, xa, ya);
 
-        byte block = world.level.getBlock(x, y);
+        @SuppressWarnings("unused")
+		byte block = world.level.getBlock(x, y);
 
         return blocking;
     }

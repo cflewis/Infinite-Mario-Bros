@@ -98,4 +98,12 @@ public class BgRenderer
         this.level = level;
         updateArea(0, 0, width, height);
     }
+
+	public void setRandom(Random random) {
+		this.random = random;
+	}
+
+	public Random getRandom() {
+		return random;
+	}
 }

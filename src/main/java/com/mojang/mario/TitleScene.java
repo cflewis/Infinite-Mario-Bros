@@ -39,7 +39,8 @@ public class TitleScene extends Scene
         g.drawImage(Art.titleScreen, 0, 120, null);
     }
 
-    private void drawString(Graphics g, String text, int x, int y, int c)
+    @SuppressWarnings("unused")
+	private void drawString(Graphics g, String text, int x, int y, int c)
     {
         char[] ch = text.toCharArray();
         for (int i = 0; i < ch.length; i++)

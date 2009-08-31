@@ -26,7 +26,8 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
     private GraphicsConfiguration graphicsConfiguration;
     private Scene scene;
     private SonarSoundEngine sound;
-    private boolean focused = false;
+    @SuppressWarnings("unused")
+	private boolean focused = false;
     private boolean useScale2x = false;
     private MapScene mapScene;
     int delay;
@@ -128,24 +129,15 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
         Graphics g = getGraphics();
         Graphics og = image.getGraphics();
 
-        int lastTick = -1;
-        //        double lastNow = 0;
         int renderedFrames = 0;
-        int fps = 0;
 
-        //        double now = 0;
-        //        double startTime = System.nanoTime() / 1000000000.0; 
-        //        double timePerFrame = 0; 
         double time = System.nanoTime() / 1000000000.0;
         double now = time;
         long tm = System.currentTimeMillis();
         long lTick = tm;
-        double averagePassedTime = 0;
 
         addKeyListener(this);
         addFocusListener(this);
-
-        boolean naiveTiming = true;
 
         toTitle();
         adjustFPS();
@@ -183,8 +175,10 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
             float alpha = (float) (System.currentTimeMillis() - lTick);
             sound.clientTick(alpha);
 
-            int x = (int) (Math.sin(now) * 16 + 160);
-            int y = (int) (Math.cos(now) * 16 + 120);
+            @SuppressWarnings("unused")
+			int x = (int) (Math.sin(now) * 16 + 160);
+            @SuppressWarnings("unused")
+			int y = (int) (Math.cos(now) * 16 + 120);
 
             //og.setColor(Color.WHITE);
             og.fillRect(0, 0, 320, 240);

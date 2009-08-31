@@ -11,7 +11,8 @@ public class LevelGenerator
     public static final int TYPE_UNDERGROUND = 1;
     public static final int TYPE_CASTLE = 2;
 
-    private static Random levelSeedRandom = new Random();
+    @SuppressWarnings("unused")
+	private static Random levelSeedRandom = new Random();
     public static long lastSeed;
 
     public static Level createLevel(int width, int height, long seed, int difficulty, int type)
@@ -475,7 +476,8 @@ public class LevelGenerator
             }
         }
 
-        int length = x1 - x0 - 2;
+        @SuppressWarnings("unused")
+		int length = x1 - x0 - 2;
 
         /*        if (length > 5 && rocks)
          {

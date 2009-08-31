@@ -18,8 +18,10 @@ public class SonarSoundEngine implements Runnable
     private int bufferSize = rate / 100; // 10 ms
     private ByteBuffer soundBuffer = ByteBuffer.allocate(bufferSize * 4);
     private float[] leftBuf, rightBuf;
-    private float amplitude = 1;
-    private float targetAmplitude = 1;
+    @SuppressWarnings("unused")
+	private float amplitude = 1;
+    @SuppressWarnings("unused")
+	private float targetAmplitude = 1;
     private boolean alive = true;
 
     protected SonarSoundEngine()
@@ -105,7 +107,8 @@ public class SonarSoundEngine implements Runnable
         //        targetAmplitude = (targetAmplitude - 1) * 0.9f + 1;
         synchronized (listenerMixer)
         {
-            float maxAmplitude = listenerMixer.read(leftBuf, rightBuf, rate);
+            @SuppressWarnings("unused")
+			float maxAmplitude = listenerMixer.read(leftBuf, rightBuf, rate);
             //            if (maxAmplitude > targetAmplitude) targetAmplitude = maxAmplitude;
         }
 

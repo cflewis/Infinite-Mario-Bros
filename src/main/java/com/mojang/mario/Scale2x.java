@@ -64,6 +64,7 @@ public class Scale2x
      * @param img The image to be scaled
      * @returns A scaled image. If you want that image to survive the next call to this method, make a copy of it.
      */
+    @SuppressWarnings("unused")
     public Image scale(Image img)
     {
         // Offset the image by one pixel so there's a border around it.
@@ -83,7 +84,7 @@ public class Scale2x
             int sp2 = (y + 2) * line;
 
             // Fill the initial A-I values
-            int A = sourcePixels[sp0];
+			int A = sourcePixels[sp0];
             int B = sourcePixels[++sp0];
             int C = sourcePixels[++sp0];
             int D = sourcePixels[sp1];
