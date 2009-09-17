@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.ucsc.eis.mario</groupId>
   <artifactId>Mario</artifactId>
-  <name>Integrity Infinite Mario</name>
+  <name>Infinite Mario Mac</name>
   <version>0.0.1-SNAPSHOT</version>
-  <description>A version of Infinite Mario Bros. with a rules engine enforcing integrity.</description>
+  <description>A Mac-compatible version of Infinite Mario.</description>
 
   <build>
     <plugins>
