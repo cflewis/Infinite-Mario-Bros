@@ -10,3 +10,7 @@ title: Infinite Mario Bros. for Mac
 [Download the JAR](http://cloud.github.com/downloads/Lewisham/Infinite-Mario-Mac/Mario-1.0-jar-with-dependencies.jar)
 
 [Get the source](http://github.com/Lewisham/Infinite-Mario-Mac)
+
+----
+
+A [Chris Lewis](http://www.cflewis.com) production
