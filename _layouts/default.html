@@ -1,21 +1,10 @@
----
-sidebar_cats:
-- setup
-- troubleshooting
-- repos
-- collaborating
-- mac
-- windows
-- linux
-- other
----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Help.GitHub</title>
+    <title>Infinite Mario Bros. for Mac</title>
 
     <link href="http://github.com/stylesheets/bundle_common.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="http://github.com/stylesheets/bundle_github.css" media="screen" rel="stylesheet" type="text/css" />
@@ -28,86 +17,12 @@ sidebar_cats:
   </head>
 
   <body>
-    <a href="http://github.com/help/help.github.com">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
-    </a>
-    {% if page.main_category %}
-      <script type="text/javascript">var main_category = "{{ page.main_category }}"</script>
-    {% else %}
-      {% if page.categories %}
-        <script type="text/javascript">var main_category = "{{ page.categories }}"</script>
-      {% endif %}
-    {% endif %}
-    <div id="main">
-      <div id="header" class="basic">
-
-        <div class="site">
-          <div class="logo">
-            <a href="/"><img src="/images/help.github.png" alt="github learn logo" /></a>
-          </div>
-          <div class="actions">
-            <a href="http://github.com">home</a>
-            <a href="#" class="support_toggle">support</a>
-            <a href="http://github.com/login">login</a>
-            <a href="http://github.com/signup">signup!</a>
-          </div>
-        </div>
-      </div>
-
-      <div id="content" class="site">
-        <div id="guides">
-          <div class="guide">
-            <div class="main">
+            <div class="main" style="margin-top:20px;text-align:center">
               <h1>{{ page.title }}</h1>
 
-              <div class="wikistyle">
+              <div class="wikistyle" style="margin-left:auto;margin-right:auto;width:400px">
                 {{ content }}
               </div>
             </div>
-
-            <div class="sidebar">
-              {% for cat in (page.sidebar_cats) %}
-                <h3>{{ cat | capitalize }}</h3>
-                  <dl>
-                    {% for post in site.posts reversed %}{% if post.categories contains cat %}
-                      <dt><a href="{{ post.url }}" id="{{ cat }}">{{ post.title }}</a></dt>
-                      <dd>{{ post.description }}</dd>
-                    {% endif %}{% endfor %}
-                  </dl>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="push"></div>
-    </div>
-
-    <div id="footer">
-      <div class="site">
-
-        <div class="info">
-          <div class="links">
-            <a href="http://github.com/blog/148-github-shirts-now-available">T-Shirts</a> |
-            <a href="http://github.com/blog">Blog</a> |
-            <a href="#" class="support_toggle">Support</a> |
-            <a href="http://github.com/training">Git Training</a> |
-            <a href="http://github.com/contact">Contact</a> |
-            <a href="http://groups.google.com/group/github/">Google Group</a> |
-            <a href="http://github.wordpress.com">Status</a>
-          </div>
-          <div class="company">
-            GitHub is <a href="http://logicalawesome.com/">Logical Awesome</a> &copy;2009 | <a href="http://github.com/site/terms">Terms of Service</a> | <a href="http://github.com/site/privacy">Privacy Policy</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script type="text/javascript">
-      Tender = {
-        hideToggle: true,
-        widgetToggles: $('.support_toggle')
-      }
-      var baseSslHost = (("https:" == document.location.protocol) ? "https://" : "http://");
-      document.write(unescape("%3Cscript src='" + baseSslHost + "github.tenderapp.com/tender_widget.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
     </body>
 </html>
