@@ -1,0 +1,50 @@
+---
+layout: default
+title: Installing Git HTML help
+description: How to install the local git HTML help files
+categories: setup
+---
+
+This guide will help you install the local git HTML help files and set git to use them by default instead of the man pages.
+
+Most git installations will install man files for help, but not the HTML help files (the same files seen on git's "online documentation":http://www.kernel.org/pub/software/scm/git-core/docs/).  Installing these help files is a fairly simple process.
+
+h2. Windows
+
+"Msysgit":http://code.google.com/p/msysgit/ installs and sets the HTML help files as the default automatically.  You don't need to do anything!
+
+h2. OSX
+
+The following commands were run on an installation of the "git-osx-installer":http://code.google.com/p/git-osx-installer/.  Your documentation path may be different, pay attention to the output of @git help --web commit@ for where your git is set to look for the HTML files.
+
+<pre class="terminal">$ git help --web commit
+fatal: '/usr/local/git/share/doc/git-doc': not a documentation directory.
+
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+Initialized empty Git repository in /Users/tekkub/git/.git/
+remote: Counting objects: 101588, done.
+remote: Compressing objects: 100% (27214/27214), done.
+remote: Total 101588 (delta 73797), reused 100304 (delta 72681)
+Receiving objects: 100% (101588/101588), 24.50 MiB | 377 KiB/s, done.
+Resolving deltas: 100% (73797/73797), done.
+Checking out files: 100% (1652/1652), done.
+
+$ cd git
+$ make quick-install-html
+GIT_VERSION = 1.6.3.3.385.g60647
+make -C Documentation quick-install-html
+    GEN doc.dep
+    SUBDIR ../
+make[2]: `GIT-VERSION-FILE' is up to date.
+    SUBDIR ../
+make[2]: `GIT-VERSION-FILE' is up to date.
+'/bin/sh' ./install-doc-quick.sh origin/html /Users/tekkub/share/doc/git-doc
+
+$ cd /usr/local/git/share/
+$ sudo mkdir doc
+$ cd doc/
+$ sudo mv ~/share/doc/git-doc .
+$ git help --web commit
+ (web browser launches)
+
+$ git config --global help.format web</pre>

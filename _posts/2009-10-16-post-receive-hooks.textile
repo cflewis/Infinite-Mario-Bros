@@ -1,0 +1,36 @@
+---
+layout: default
+title: Post-Receive Hooks
+description: Working with GitHub's post-receive web hooks.
+categories: collaborating
+---
+
+p(. _For help testing webhooks, see "this guide":/testing-webhooks_
+
+If you supply a post-receive URL, GitHub will POST to that URL when someone uses <code>git push</code> on that repository.
+
+<img src="http://img.skitch.com/20090814-ksn6tk94h8is3ddgsxmsmuxk4s.jpg"/>
+
+What we'll send is JSON containing information about the push and the commits involved.
+
+Here's the template we use in Ruby to generate the JSON:
+
+<script src="http://gist.github.com/212213.js"></script>
+
+This is sent as a POST with a single parameter: 'payload'
+
+So, for example, you'd do something like this in a <a href="http://sinatra.rubyforge.org/">Sinatra</a> server:
+
+<script src="http://gist.github.com/212212.js"></script>
+
+A template Rack server for the task: "raggi/github_post_receive_server":http://github.com/raggi/github_post_receive_server/
+
+Send something to "Campfire":http://github.com/jnewland/github-campfire/, "IRC":http://github.com/webs/irccat, "Twitter":http://github.com/jnunemaker/github-twitter/, your CI server, whatever.  It's your data.
+
+The @commits@ array is ordered with the most recent commit as the first element.  The last element, therefor, is the oldest commit.
+
+Here's an example of a POST'd 'payload' JSON object:
+
+<script src="http://gist.github.com/212211.js"></script>
+
+For more information on this technique, see the <a href="http://webhooks.pbwiki.com/">Web Hooks Wiki</a>.

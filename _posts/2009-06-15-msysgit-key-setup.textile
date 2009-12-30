@@ -1,0 +1,61 @@
+---
+layout: default
+title: Generating SSH keys (Win/msysgit)
+description: Setting up SSH keys with msysgit on Windows
+categories: windows
+main_category: setup
+---
+
+This guide will step you through the process of generating a keypair in msysgit and uploading it to GitHub
+
+Generating an SSH key with msysgit is a fairly straightforward process.  First and foremost, make sure you're working in the Git Bash console, not cmd (the default Windows command line).  You can find Git Bash under the git folder in your start menu, or by right clicking on a folder and selecting "Git Bash Here" if you choose to install context menu items during the msysgit installation.
+
+h2. Backup and remove existing keys
+
+Unless this is your first time installing msys on your computer, you should double check that keys do not already exist.  If they do you can either use the existing key(s) or remove them.  In either case, you should make a backup of the keys.
+
+<pre class="terminal">$ cd ~/.ssh
+$ ls
+config  id_rsa  id_rsa.pub  known_hosts
+$ cd ..
+$ mkdir ssh_key_backup
+$ cp .ssh/id_rsa* ssh_key_backup
+$ rm .ssh/id_rsa*</pre>
+
+Here we have an existing keypair, @id_rsa@ and @id_rsa.pub@, which we've copied into @~/ssh_key_backup@ before removing.  By default, ssh will use keys in @~/.ssh@ that are named @id_rsa@, @id_dsa@ or @identity@.
+
+h2. Generating a key
+
+p(. _If you have an existing keypair you wish to use, you can skip this step._
+
+Now that we're certain ssh won't use an existing key, it's time to generate a new keypair.  Lets make an RSA keypair:
+
+<pre class="terminal">$ ssh-keygen -t rsa -C "tekkub@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Tekkub/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Tekkub/.ssh/id_rsa.
+Your public key has been saved in /c/Users/Tekkub/.ssh/id_rsa.pub.
+The key fingerprint is:
+e8:ae:60:8f:38:c2:98:1d:6d:84:60:8c:9e:dd:47:81 tekkub@gmail.com</pre>
+
+At the first prompt you can just hit enter to generate the key with the default name.  *You should use a good passphrase with your key.*  See "Working with SSH key passphrases":/working-with-key-passphrases for more details on why you should use a passphrase and how to avoid re-entering it every time you use your key.
+
+h2. Adding the key to your GitHub account
+
+Now launch your browser and open the "account page":https://github.com/account.  In the "SSH Public Keys" section click "add another public key", then paste your key into the "key" field.  If you leave the title blank the key comment (your email) will be used for the title.
+
+Make sure you use the public key (@id_rsa.pub@ in our example), and do not add any newlines or whitespace inside the key.
+
+!/images/add_key.png!
+
+h2. Testing things out
+
+Testing if our new key works is simple:
+
+<pre class="terminal">$ ssh git@github.com
+Hi tekkub! You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</pre>
+
+If you do not get the "successfully authenticated" message, check out the "troubleshooting guide":http://github.com/guides/addressing-authentication-problems-with-ssh.

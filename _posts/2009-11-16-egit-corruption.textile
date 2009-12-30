@@ -1,0 +1,44 @@
+---
+layout: default
+title: Fixing egit corruption
+description: How to fix corruption in a remote repo caused by egit
+categories: troubleshooting
+---
+
+Due to a bug in egit's impementation of the @git push@ command, remote repos can become corrupted due to missing objects:
+
+<pre class="terminal">$ git fsck
+broken link from  commit 5b90a930763c442f0fc3d819685083b4eda69f8e
+              to  commit e1ea55d308b7808cb982f509c8dfa199ada4677e
+missing commit e1ea55d308b7808cb982f509c8dfa199ada4677e</pre>
+
+This can prevent cloning and fetching from the repo.  The objects were never pushed to the remote repo, therefore support cannot recover the repo directly for the user.  The only solution is for the user that pushed the commits to push them again from the command line.
+
+h2. Correcting the remote repo
+
+To correct the remote repo the missing objects need to be re-pushed from an uncorrupted repo.  This should be done from the command line, not from egit.  To start, run @git fsck@ on your local repo to ensure it has not been corrupted.  If you do not receive any errors about broken links or missing objects, you're clear to continue.
+
+Re-pushing is a simple matter of deleting the remote branch and then pushing it again.
+
+<pre class="terminal">$ git push origin :master
+$ git push origin master</pre>
+
+You may need to do this for many branches if the remote repo has more than one branch that was pushed by egit.  If one of the branches that was re-pushed was the default branch (usually master), you'll need to re-establish that default:
+
+<pre class="terminal">$ git remote set-head origin master</pre>
+
+After you've pushed and reset HEAD, testing the repo repo is just a matter of cloning it:
+
+<pre class="terminal">[tekkub@tekBook: ~/tmp] $ git clone git://github.com/tekkub/test.git
+Initialized empty Git repository in /Users/tekkub/tmp/test/.git/
+remote: Counting objects: 1815, done.
+remote: Compressing objects: 100% (838/838), done.
+remote: Total 1815 (delta 1139), reused 1552 (delta 961)
+Receiving objects: 100% (1815/1815), 537.69 KiB | 549 KiB/s, done.
+Resolving deltas: 100% (1139/1139), done.</pre>
+
+If you have re-pushed all branches in your repo and cloning still fails, please "contact support":http://support.github.com and open a ticket.  Be sure to include a link to your repo and mention that you've already performed the steps on this page.
+
+h2. Avoiding future corruption
+
+We recommend users avoid using egit to push their repos.  Always push from the command line.

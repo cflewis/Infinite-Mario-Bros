@@ -1,0 +1,94 @@
+---
+layout: default
+title: Troubleshooting SSH issues
+description: Solutions to common SSH issues
+categories: setup troubleshooting
+main_category: troubleshooting
+---
+
+This guide contains the solutions to the most common SSH connection issues encountered on GitHub
+
+The first step to testing your connection is to run <code>ssh git@github.com</code>.  If your key works, you should get a success message:
+<pre class="terminal">$ ssh git@github.com
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.</pre>
+
+If this step fails, try running <code>ssh -v git@github.com</code>.  This will print out debug info on what ssh is trying to do.  In this output you should check that ssh is connecting to the correct server, on the correct port (22).  Many firewalls and proxies will block this connection.  Also ensure that ssh is reading the correct key files, these are at ~/.ssh/id_rsa, id_dsa and identity by default.  If your key is not at this location, you should move it or create an override (see the "SSH config" section below).
+
+h2. Permission to user/repo2 denied to user/repo1
+
+This error occurs when you attach your key as a deploy key on repo1.  You can push and pull from that repo without issue, but you won't have access to any other repo with your key.  To solve this, remove the key from repo1's deploy keys and attach it on your "account page":https://github.com/account instead.  This key will now have access to all repos your account has access to.
+
+h2. Permission denied (publickey)
+
+This is usually caused when ssh cannot find your keys.  Make sure your key is in the default location, @~/.ssh@. If you run @ssh-keygen@ again and just press enter at all 3 prompts it will be placed here automatically. Then you can add the contents of id_rsa.pub to "my github keys":https://github.com/account. If id_rsa.pub doesn't work try id_dsa.pub. You might need to generate a new dsa key with @ssh-keygen -t dsa@ if you just have an rsa key.
+
+h3. Finding out what keys ssh is using
+
+Finding what keys ssh is offering to the server is fairly simple.  Run <code>ssh -v git@github.com</code> and look at the output:
+
+<pre class="terminal">debug1: Next authentication method: publickey
+debug1: Trying private key: /Users/tekkub/.ssh/identity
+debug1: Trying private key: /Users/tekkub/.ssh/id_rsa
+debug1: Trying private key: /Users/tekkub/.ssh/id_dsa
+debug1: No more authentication methods to try.</pre>
+
+In this example, SSH could not find any keys ("Trying" means ssh is trying to find the key on disk).  We should either rename our keypair to use a default name, or run @ssh-add path/to/key@ to make SSH aware of the key's existence.
+
+<pre class="terminal">debug1: Next authentication method: publickey
+debug1: Offering public key: /Users/tekkub/.ssh/id_rsa
+debug1: Remote: Forced command: gerve tekkub
+...
+ERROR: Hi tekkub! You've successfully authenticated, but GitHub does not provide shell access</pre>
+
+Here we've renamed our keypair to @~/.ssh/id_rsa@.  SSH finds the key and offers it to the server.  This key works and we authenticate as user "tekkub".
+
+h2. Issues when using sudo
+
+p((. _You shouldn't run @sudo git@ unless you have a very good reason.  If you don't know if you have a good reason to use sudo, it's likely that you do not have one._
+
+If you are using sudo with git commands (e.g. using <code>sudo git clone</code> because you are deploying to a root-owned folder), ensure that you also generated the key using sudo.  Otherwise, you will have generated a key for your current user, but when you are doing sudo git, you are actually the root user - thus, the keys will not match.
+
+Simply put, if you are using <code>sudo git</code>, then also use <code>sudo ssh-keygen</code>.
+
+h2. SSH config
+
+If your github authentication information is different from your machine account information, you'll need to modify your ssh configuration file.
+
+Create or open the file at <code>~/.ssh/config</code> Add the following lines:
+
+<pre>Host github.com
+	User git
+	Hostname github.com
+	PreferredAuthentications publickey
+	IdentityFile [local path to private key half of github public key you provided]</pre>
+
+You may also need to update the permissions on your .ssh folder and its contents. The SSH application will ignore secret files that are too permissive.
+
+<pre class="terminal">$ chmod 700 ~/.ssh
+$ chmod 600 ~/.ssh/*</pre>
+
+h2. No supported authentication methods available
+
+You should be aware of the environment variable GIT_SSH, which is used by git to find your ssh-speaking client, if ssh doesn't work for you.  The git install may be using plink.exe (via GIT_SSH) to perform the authentication.  If so, make sure you have pageant.exe running, and the key you created for github loaded into it.  This provides the key to plink.exe; without it, the above error will occur.
+
+See "this post":http://groups.google.com/group/github/browse_thread/thread/21fd06fb8c3f43bd/f5c44b2197d1be15 for a longer discussion.
+
+Especially with cygwin-git+pageant+putty/plink, you might want to set GIT_SSH to your plink.exe location -- unless that doesn't work for you. In certain circumstances (perhaps after a service pack installation), you will find git network operations failing with
+this is because plink.exe running from your (cygwin-provided) git command "*can't talk with pageant to get its keys*":http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/cygwin-clobbers-pageant.html . A solution is to set up a script that has:
+<pre class="terminal">/cygdrive/c/ntnot/plink.exe -i "c:\users\you\.ssh\key-file-for-github.ppk" $1 $2</pre>
+
+and set GIT_SSH to point to this:
+
+<pre class="terminal">declare -x GIT_SSH="c:\path\to\script"</pre>
+
+This explicitly provides the key for plink to use, rather than have it talk with pageant.
+
+This problem occured for me when I used the executable with pageant that came with WinSCP, but a version of plink in a different directory. I have not found the exact cause yet. All versions were plink/pageant 0.60. (Not running under Cygwin)
+
+p(. I did not have luck with this approach; GIT_SSH was set to plink.exe already; when I tried to create this script and reset the GIT_SSH I got a "could not fork" error back from git even though the script would run happily on its own - elijahsmith 9/11/08
+
+p(. I couldn't get the latest versions of plink and pageant (as of 2008-Nov-15) to talk, and I'm not running Cygwin. The only solution was to revert to using open-ssh by setting @GIT_SSH@ to @C:\Program Files\prg\Git\bin\ssh.exe@. -- "dandv":http://github.com/dandv
+
+h2. On Windows, you can't type "y" to confirm the "Store [server's host] key in cache?" prompt
+
+This happens because git eats up the ssh client's STDIN output. To work around that, launch @ssh github.com@ or @plink.exe -agent github.com@ standalone and press "y" at the prompt.

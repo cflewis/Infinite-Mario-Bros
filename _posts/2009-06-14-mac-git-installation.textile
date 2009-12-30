@@ -1,0 +1,61 @@
+---
+layout: default
+title: Installing git (OSX)
+description: How to install git on OSX
+categories: mac setup
+main_category: setup
+---
+
+There are a number of methods to install git on OSX.  This guide details the most common methods, in order of ease of install.
+
+h2. Pre-compiled Installer
+
+Download and run "git-osx-installer":http://code.google.com/p/git-osx-installer/
+
+h2. Homebrew
+
+# Install "Homebrew":http://github.com/mxcl/homebrew if you haven't already done so.
+# Install Git _(You may want to include Subversion support if you want to import SVN repositories. Snow Leopard already contains a copy of SVN)_
+
+<pre class="terminal">$ brew install git
+==> Downloading http://kernel.org/pub/software/scm/git/git-1.6.5.7.tar.bz2
+######################################################################## 100.0%
+==> ./configure --prefix=/usr/local/Cellar/git/1.6.5.7
+==> make install
+==> Downloading http://kernel.org/pub/software/scm/git/git-manpages-1.6.5.7.tar.bz2
+######################################################################## 100.0%
+/usr/local/Cellar/git/1.6.5.7: 383 files, 16M, built in 74 seconds
+</pre>
+
+h2. MacPorts
+
+# Install "MacPorts":http://macports.org/install.php if you haven't already done so.
+# Make sure your ports are up to date.
+# Install Git _(You may want to include Subversion support if you want to import SVN repositories)_
+
+<pre class="terminal">$ sudo port selfupdate
+
+MacPorts base version 1.600 installed
+Downloaded MacPorts base version 1.600
+
+The MacPorts installation is not outdated and so was not updated
+selfupdate done!
+
+$ sudo port install git-core +svn
+--->  Installing curl 7.18.2_0
+--->  Activating curl 7.18.2_0
+--->  Installing openssh 5.0p1_0+darwin_9
+--->  Activating openssh 5.0p1_0+darwin_9
+--->  Installing p5-error 0.17012_0
+--->  Activating p5-error 0.17012_0
+--->  Installing popt 1.13_0
+--->  Activating popt 1.13_0
+--->  Installing rsync 3.0.2_0
+--->  Activating rsync 3.0.2_0
+--->  Installing git-core 1.5.5.3_0+doc
+--->  Activating git-core 1.5.5.3_0+doc
+</pre>
+
+h2. Compiling git manually
+
+See "compiling and installing git on mac os x":http://github.com/guides/compiling-and-installing-git-on-mac-os-x.

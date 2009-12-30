@@ -1,0 +1,115 @@
+
+.category_index { float: left; margin: 0.25em; width:19em; }
+.category_index h2 { background: #ddd; text-align: center; padding: 0.25em; margin-bottom: 0.5em; }
+.category_index dt, .category_index dd { margin-right: 0.5em; }
+.category_index dt { margin-left: 0.5em !important; }
+.category_index dd { margin-left: 1.5em !important; }
+
+
+/*********************/
+/*      Sidebar      */
+/*********************/
+
+#guides .guide .sidebar h3 {
+  padding: 4px;
+  margin: .2em 0;
+  cursor: pointer;
+}
+#guides .guide .sidebar h3:focus { outline: none; }
+
+.sidebar dl { padding: 0 0.5em 0.5em 0.5em; }
+.sidebar dt {
+  font-weight: bold;
+  margin-top: 0.5em;
+}
+
+.ui-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  background-position: -2px 2px;
+  background-repeat: no-repeat;
+}
+.ui-icon-triangle-expand { background-image: url(/images/expand.png); }
+.ui-icon-triangle-collapse { background-image: url(/images/collapse.png); }
+
+
+/**********************/
+/*      Pre/code      */
+/**********************/
+
+pre.terminal {
+  padding: 1em !important;
+  background: #444 !important;
+  color: white !important;
+  font-size: 0.9em !important;
+}
+
+code {white-space: nowrap;}
+
+
+/********************/
+/*      Images      */
+/********************/
+
+.wikistyle img {max-width: 690px;}
+
+
+/* Tender widget fix */
+#tender_window {position: fixed !important;}
+
+
+/****************************/
+/*      Forking ribbon      */
+/****************************/
+
+@font-face {
+  font-family: Collegiate;
+  src: url("/Collegiate.ttf");
+}
+
+.myribbon {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  height: 12em;
+  right: 0;
+}
+
+.myribbon a, myribbon a:hover { text-decoration: none; }
+
+.myribbon a {
+  /* Font */
+  font-family: Collegiate, sans-serif;
+  letter-spacing: -.1px;
+  opacity: 0.95;
+  font-size: 125%;
+  line-height: 1.35em;
+
+  /* Position */
+  display: block;
+  position: relative;
+  top: 2.5em;
+  right: -2.6em;
+  padding: 0.25em 0;
+
+  /* Sit and spin */
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+  /* Defaults friendly for white pages. */
+  -moz-box-shadow: 0 0 13px #888;
+  -webkit-box-shadow: 0 0 13px #888;
+  color: #FFF;
+  text-shadow: 0 0 0.5em #444;
+
+  /* Culla */
+  background-color: #9a0000;
+  background: -webkit-gradient(linear, left bottom, left top, from(#9a0000), to(#a90000));
+}
+
+.myribbon a span {
+  padding: 0.1em 3em;
+  border: 1px solid #bf6060;
+}

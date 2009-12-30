@@ -1,0 +1,60 @@
+---
+layout: default
+title: Forking a project
+description: How to fork a project, submit changes, and pull from other repos in the fork network
+categories: collaborating
+---
+
+This guide will step you through the process of forking, pushing you changes, and pulling in changes from the upstream repo.
+
+In this guide, we will use "github-services":http://github.com/pjhyett/github-services as an example to fork, submit a change, and re-sync with the forked repo.  All the examples on this page assume you're working in the "master" branch.
+
+Note that this works for pulling from a forked repository to the original, as well.
+
+h2. Setting up
+
+Naturally, the first thing you must do is create your fork.  To do this, you simply click the !http://github.com/images/modules/repos/fork_button.png! button on the project's page.  When the fork has completed, you will be presented with your new repo information.
+
+Now you need to clone the fork.  Make sure you use the "Your Clone URL" and *not* the "Public Clone URL"
+<pre class="terminal">$ git clone git@github.com:billyanyteen/github-services.git</pre>
+
+Once the clone is complete your repo will have a remote named "origin" that points to your fork on github.  Don't let the name confuse you, this *does not* point to the original repo you forked from.  To help you keep track of that repo we will add another remote named "upstream"
+<pre class="terminal">$ cd github-services
+$ git remote add upstream git://github.com/pjhyett/github-services.git
+$ git fetch upstream</pre>
+
+Note that we used the public clone URL for upstream, so we can't push changes directly to it.  We probably don't have permission to do that anyway, which is why we're creating a fork in the first place.
+
+h2. Pushing your changes
+
+Now that we've got our fork, we need to make a few changes and commit them locally.  Once you've done this, it's time to push your updated branch.
+<pre class="terminal">$ git push origin master</pre>
+
+After you've pushed your commit(s) you need to inform the project owner of the changes so they can pull them into their repo.  From your project's page, click the !http://github.com/images/modules/repos/pull_request_button.png! button.  Fill in a note and pick who to send the request to.  In large projects it is important that you *do not* send the request to every person who's touched the project.  Make sure you're only sending to the people who care, the user(s) that manage the core project repo.
+
+_Note that some projects do not accept pull requests.  Make sure you submit your request to the place they want it, or you will probably just be ignored._
+
+h2. Pulling in upstream changes
+
+Some time has passed, the upstream repo has changed and you want to update your fork before you submit a new patch.  There are two ways to do this:
+<pre class="terminal">$ git fetch upstream master
+$ git merge upstream/master</pre>
+
+<pre class="terminal">$ git pull upstream master</pre>
+
+@git pull@ is a more direct way, but the merge it performs can be confusing if the user doesn't expect it and a merge conflict results.  @git fetch@ will also grab all branches, where @git pull@ will only grab the one specified.
+
+If you have local commits that are not in the upstream branch, a normal merge will occur.  If your local commits are in the upstream branch, a fast-forward merge will be done, moving your local branch to the same commit as upstream/master.  If both repos have edits to the same location in the same file, you may run into a merge conflict.  Conflicts must be resolved by hand and a commit made to complete the merge.
+
+Now that your local branch has been updated, you can commit, push, and send a pull request.
+
+You may wish to do the fetch and merge manually, instead of letting git-pull do it for you.  This can sometimes help avoid headaches caused by mysterious merge conflicts.
+
+h2. Deleting the forked repository
+
+To remove the fork, just delete it like any repo: click the "Edit" button next to "pull request", then at the bottom of the page there will be a "Delete This Repository…" link.
+
+h2. Additional resources
+
+* "github-gem":http://github.com/defunkt/github-gem - Handy tool for pulling in forked branches
+* "Rails on the Run forking tutorial":http://railsontherun.com/2008/3/3/how-to-use-github-and-submit-a-patch

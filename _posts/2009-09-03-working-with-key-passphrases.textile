@@ -1,0 +1,100 @@
+---
+layout: default
+title: Working with SSH key passphrases
+description: SSH key passphrases, why you should use them, and how to avoid re-entering them
+categories: windows mac setup
+main_category: setup
+---
+
+This guide will step you through the process of securing your ssh keys while avoiding re-entry of your passphrase every time you use the key.
+
+h2. Why do I need a passphrase?
+
+Passwords aren't very secure, you already know this.  If you use one that's easy to remember, it's easier to guess or brute-force.  If you use one that's random it's hard to remember, and thus you're more inclined to write the password down.  Both of these are Very Bad Things&trade;.  This is why you're using ssh keys.
+
+But using a key without a passphrase is basically the same as writing down that random password in a file on your computer.  Anyone who gains access to your drive has gained access to every system you use that key with.  This is also a Very Bad Thing&trade;.  The solution is obvious, add a passphrase.
+
+h3. But I don't want to enter a long passphrase every time I use the key!
+
+Neither do I!  Thankfully, there's a nifty little tool called @ssh-agent@ that can save your passphrase securely so you don't have to re-enter it.  If you're on OSX Leopard or later your keys can be saved in the system's keychain to make your life even easier.
+
+h2. Adding or changing a passphrase
+
+Passphrases can be added to an existing key or changed without regenerating the keypair very easily:
+
+<pre class="terminal">$ ssh-keygen -p
+Enter file in which the key is (/Users/tekkub/.ssh/id_rsa):
+Key has comment '/Users/tekkub/.ssh/id_rsa'
+Enter new passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved with the new passphrase.</pre>
+
+If your key already has a passphrase, you will be prompted to enter it before you can change to a new passphrase.
+
+h2. Auto-launching ssh-agent on msysgit
+
+You can run @ssh-agent@ automatically when you open bash by adding the following to your @~/.profile@ or @~/.bashrc@ file:
+
+<pre>SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+  echo "Initializing new SSH agent..."
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" > /dev/null
+  /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+  . "${SSH_ENV}" > /dev/null
+  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_agent;
+  }
+else
+  start_agent;
+fi</pre>
+
+p(. *Note:* If you don't use the default key names, or store your keys in a different path, you will need to add the path to the @/usr/bin/ssh-add@ line so that ssh knows where to find your key.
+
+Now when you first run git bash, you will be prompted for your passphrase:
+
+<pre class="terminal">Initializing new SSH agent...
+succeeded
+Enter passphrase for /c/Users/Tekkub/.ssh/id_rsa:
+Identity added: /c/Users/Tekkub/.ssh/id_rsa (/c/Users/Tekkub/.ssh/id_rsa)
+Welcome to Git (version 1.6.0.2-preview20080923)
+
+
+Run 'git help git' to display the help index.
+Run 'git help <command>' to display help for specific commands.
+[Tekkub@KAKU: ~ master]$</pre>
+
+The process will continue to run until you log out, shutdown or kill ssh-agent.  To kill the process, find its PID with @ps@ then call @kill <PID>@:
+
+<pre class="terminal">[Tekkub@KAKU: ~ master]$ ps
+        PID    PPID    PGID     WINPID  TTY  UID    STIME COMMAND
+       3796       1    3796       3796    ?  500 18:07:43 /bin/ssh-agent
+       2780       1    2780       2780  con  500 18:10:50 /bin/bash
+       3400    2780    3400        784  con  500 18:13:31 /bin/ps
+[Tekkub@KAKU: ~ master]$ kill 3796</pre>
+
+p(. <em>This section was written with help from "this post":http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html.</em>
+
+h2. Mac OSX Keychain
+
+If you are on OSX Leopard or later, ssh-agent is run automatically for you.  It will also integrate with the keychain, so you can unlock your keys with it.  This has some major advantages over a command-line based setup like protecting your input from being copied or spied upon by universal access or low-level keyboard routines.
+
+The default key files (@.ssh/id_rsa@, @.ssh/id_dsa@ and @.ssh/identity@) should be handled automatically.  If you have a key with a different name, you can add it with @ssh-add path/to/my_key@
+
+p(. _Make sure that you're using the default OS X ssh-add command and not one installed by macports or some other external source._
+
+When you first try to use the key you will be prompted to enter your passphrase:
+
+!/images/SecurityAgent.jpg(Keychain prompt)!
+
+If you choose to save the passphrase with your keychain, you won't have to enter it again.  Instead you'll simply need to unlock your keychain.
+
+p(. <em>This section was written with help from "this guide":http://www.dribin.org/dave/blog/archives/2007/11/28/ssh_agent_leopard/.  If you would like to use more paranoid keychain settings like locking after sleep, check out "this guide":http://www.dribin.org/dave/blog/archives/2007/11/28/securing_ssh_agent/.</em>

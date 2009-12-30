@@ -1,0 +1,36 @@
+---
+layout: default
+title: Setting user name, email and GitHub token
+description: Configure your local git installation so that commits are linked to your GitHub account
+categories: setup
+---
+
+This guide covers basic git settings you should set before making any commits.
+
+Please note that config changes will only affect future commits.  Existing commits will retain the info they were committed with.  Also, the environment variables @GIT_COMMITTER_NAME@, @GIT_COMMITTER_EMAIL@, @GIT_AUTHOR_NAME@ and @GIT_AUTHOR_EMAIL@ will override git-config settings if they are defined.
+
+h2. Setting user name and email globally in git
+
+Git needs to know your username and email address to properly credit your commits.  Setting this setting will also let GitHub link the commits you make to your GitHub account.  Only commits made after you change this setting will use the new info, old commits will preserve the info they were committed with.
+
+p(. _The "email" setting does not have to be a valid email address, it only need match the "user@server" naming scheme._
+
+<pre class="terminal">$ git config --global user.name "Tekkub"
+$ git config --global user.email "tekkub@gmail.com"</pre>
+
+h2. Overriding settings for individual repos
+
+If you do not want commits to be "blamed" on your global email setting, you can override these settings on a per-repo basis.
+
+<pre class="terminal">$ cd my_other_repo
+$ git config user.name "Not Tekkub"
+$ git config user.email "not@tekkub.net"</pre>
+
+h2. GitHub token config
+
+Some tools connect to GitHub without SSH, for these tools you need to set your "local GitHub config":http://github.com/blog/180-local-github-config.  You can find your token at the top of the "account page":https://github.com/account
+
+<pre class="terminal">$ git config --global github.user tekkub
+$ git config --global github.token 0123456789abcdef0123456789abcdef</pre>
+
+If you change your GitHub password a new token will be created, therefore you'll need to change this setting.

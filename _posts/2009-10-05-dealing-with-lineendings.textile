@@ -1,0 +1,51 @@
+---
+layout: default
+title: Dealing with line endings
+description: How to ensure that line endings are consistent in your repo
+categories: setup windows mac linux
+main_category: windows
+---
+
+Line endings... the scourge of every Windows-based developer that tries to mingle with linux- or mac-based developers.  Though most modern text editors can handle both newline types without issue, git is not as graceful.
+
+For more info on the issue see "Wikipedia":http://en.wikipedia.org/wiki/Newline.
+
+h2. Mac and Linux users, you don't get to sit this one out
+
+Although you might think you're immune to CRLF-ended files on mac and linux, you are not.  It is possible to download files from an external source that use CRLF, and thus commit them into your repo.  To be safe, you should set your config to convert line endings on commit so they are always LF in the repo:
+
+<pre class="terminal">$ git config --global core.autocrlf input</pre>
+
+h2. I just cloned and git says files have changed!
+
+So, you just cloned a repo on a Windows box, and it says that all of your files have been modified.  Huh?  You've not touched anything yet!  What the...
+
+The problem is that your @core.autocrlf@ option is likely not enabled.  This setting tells git to convert the newlines to the system's standard when checking out files, and to LF newlines when committing in.  To turn it on use this command:
+
+<pre class="terminal">$ git config --global core.autocrlf true</pre>
+
+Once this is set, you need to reset your repos. The best way to do this is wipe out your working tree (all the files except the .git directory) and then restore them:
+
+<pre class="terminal"># Remove everything from the index
+$ git rm --cached -r .
+
+# Re-add all the deleted files to the index
+# You should get lots of messages like: "warning: CRLF will be replaced by LF in <file>."
+$ git diff --cached --name-only -z | xargs -0 git add
+
+# Commit
+$ git commit -m "Fix CRLF"
+
+# If you're doing this on a Unix/Mac OSX clone then optionally remove
+# the working tree and re-check everything out with the correct line endings.
+$ git ls-files -z | xargs -0 rm
+$ git checkout .
+</pre>
+
+p(. _Thanks to Charles Bailey's post on "stack<b>overflow</b>":http://stackoverflow.com/questions/1510798/trying-to-fix-line-endings-with-git-filter-branch-but-having-no-luck/1511273#1511273 for this solution._
+
+h2. Moving forward
+
+Now that you've standardized the newlines in your repo things should be better.  However, every person that touches your repo should turn autocrlf on, even non-Windows users.  It is possible for them to bring in code from an outside source that has CRLF newlines, and you don't want them saved into the repo like that.
+
+For more details on the @core.autocrlf@ setting see the "git-config documentation":http://www.kernel.org/pub/software/scm/git/docs/git-config.html.

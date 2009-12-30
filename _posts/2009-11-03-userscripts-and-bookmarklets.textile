@@ -1,0 +1,24 @@
+---
+layout: default
+title: Userscripts and Bookmarklets
+description: Various bits of code to enhance and personalize GitHub
+categories: other
+---
+
+This page contains userscripts and bookmarklets to enhance and customize GitHub.  If you have a link to add, please "fork this repo":http://github.com/help/help.github.com.
+
+Userscripts can be installed by simply visiting the "raw" version of the gist or github page.  Your browser should prompt you to install the userscript if it recognizes it.  See "this post":http://github.com/blog/302-gist-for-greasemonkey for details.
+
+Bookmarklets should provide their own installation instructions.
+
+h2. GitHub
+
+* "GitHubbub":http://github.com/stephencelis/githubbub - Growl notifications for the dashboard events
+* "Dashboard twitter status":http://gist.github.com/225512 - Adds the two most recent, non-reply tweets from @github to your dashboard
+* "Augment GitHub":http://github.com/nakajima/augment-github - Bookmarklet that adds follower, fork, and issue counts to your repos on your dashboard
+* "User profile gist links":http://gist.github.com/225593 - Adds a link to user profile pages linking to that user's gists
+
+h2. Gist
+
+* "Replace page title with filename":http://gist.github.com/93187
+* "Diff for gist":http://gist.github.com/105913

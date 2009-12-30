@@ -1,0 +1,33 @@
+---
+layout: default
+title: Moving a repo
+description: How to move a repo from one account to another
+categories: repos
+---
+
+This guide details the process of moving a repo to another account and transferring the network of forked repos.
+
+h2. Creating a new repo
+
+The first step to moving a repo is to create a new repo on the target account.  If your current repo is public, you can simply fork the repo while logged into the target account.  If the repo is private, you will need to create a new private repo on the target account to push to.
+
+h2. Creating a mirror
+
+p(. _If you forked this step is not necessary, but you may still do it for good measure._
+
+To create a complete mirror that includes all branches and tags, you need to do a bare-clone followed by a mirror-push:
+
+<pre class="terminal">git clone --bare git@github.com:myaccount/my-old-repo.git
+cd my-old-repo
+git push --mirror git@github.com:mycompany/our-new-repo.git
+cd ..
+rm -rf my-old-repo</pre>
+
+h2. Reparenting forks
+
+If your original repo has forks that you wish to reparent to the new repo, please "file a support ticket":http://support.github.com/.
+*Do not delete the original repo until the reparenting is complete!*
+
+h2. Collaborators
+
+If your original repo had collaborators, they will not be copied.  You will need to add each user as a collaborator on the new repo.

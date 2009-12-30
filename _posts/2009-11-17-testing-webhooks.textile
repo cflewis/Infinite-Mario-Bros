@@ -1,0 +1,66 @@
+---
+layout: default
+title: Testing webhooks
+description: How to test post-receive webhook calls from your repo
+categories: collaborating troubleshooting
+main_category: troubleshooting
+---
+
+Testing that a webhook works can be a bit of a pain.  Thankfully with the help of "PostBin":http://www.postbin.org/ the pain can be avoided.
+
+h2. When hooks are fired
+
+First and foremost, webhooks are not always called when a push is made.  Currently hooks only fire when a branch that exists on GitHub is modified.  Pushing new branches, deleting branches, and creating tags will not fire a webhook.  Forced pushes such as @git push origin master --force@ may not predictably call hooks as well.  To ensure your commits are sent to your webhook, always push the branch when it is created before you commit.  This way the branch exists on GitHub when you push the commits you want sent to the webhook.
+
+h2. Setting up
+
+First, visit "PostBin":http://www.postbin.org/ and click "Make a PostBin".  Copy the URL you are sent to:
+
+!http://img.skitch.com/20091118-jp5jt8gtcxy8dn2w3kk1xkpt8j.jpg!
+
+Paste this URL into your repo's post-receive URLs setting and save:
+
+!http://img.skitch.com/20091118-nr8ggc3rgdq8i1r2x8ad1mm57r.jpg!
+
+h2. Testing the hook is fired
+
+To test that the hook fires we need an existing branch on the GitHub repo.  In this example we create a new repo, push one commit, then make another commit and push it.  We only expect the second push to be sent to our PostBin.
+
+<pre class="terminal">[tekkub@tekBook: ~/tmp] $ mkdir test_post
+[tekkub@tekBook: ~/tmp] $ cd test_post
+[tekkub@tekBook: ~/tmp/test_post] $ git init
+Initialized empty Git repository in /Users/tekkub/tmp/test_post/.git/
+
+[tekkub@tekBook: ~/tmp/test_post master#] $ touch README
+[tekkub@tekBook: ~/tmp/test_post master#] $ git add README
+[tekkub@tekBook: ~/tmp/test_post master#] $ git commit -m 'first commit'
+[master (root-commit) 94afb6c] first commit
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README
+
+[tekkub@tekBook: ~/tmp/test_post master] $ git remote add origin git@github.com:tekkub/test_post.git
+[tekkub@tekBook: ~/tmp/test_post master] $ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 201 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:tekkub/test_post.git
+ * [new branch]      master -> master
+
+[tekkub@tekBook: ~/tmp/test_post master] $ echo "This is a real edit" > README
+[tekkub@tekBook: ~/tmp/test_post master*] $ git add README
+[tekkub@tekBook: ~/tmp/test_post master+] $ git commit -m 'second commit'
+[master a58cf12] second commit
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+[tekkub@tekBook: ~/tmp/test_post master] $ git push origin master
+Counting objects: 5, done.
+Writing objects: 100% (3/3), 249 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:tekkub/test_post.git
+   94afb6c..a58cf12  master -> master</pre>
+
+Now that we've pushed a commit that should be sent to our webhook, lets check if it did by reloading our PostBin page:
+
+!http://img.skitch.com/20091118-rgxb1rx3aixqfdk4sm5wtaw4t7.jpg!
+
+Success!

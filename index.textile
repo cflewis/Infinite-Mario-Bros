@@ -1,0 +1,36 @@
+---
+layout: default
+title: Welcome to the GitHub Help site
+---
+
+Here we have compiled many guides to help you set up and use git and GitHub.
+
+_This site is a work in progress._
+
+h2. Guides
+
+Use the sidebar on the right side of this site to access our guides!
+
+If you would like to submit your own guides, please fork "our repo":http://github.com/help/help.github.com/ and send pull requests to "tekkub":http://github.com/tekkub
+
+<em>We are in the process of moving guides over from the "old wiki":http://github.com/guides/home.</em>
+
+h2. Getting help
+
+There are a number of resources available to help you learn git or fix issues with GitHub:
+
+h3. GitHub
+
+* <a href="#" class="support_toggle">GitHub Support</a> -- Resolve issues with GitHub or get help with basic git issues.
+* "Contact GitHub":http://github.com/contact -- Don't feel like making an account on support.github.com?  This is your direct line to us.
+* "GitHub Google Group":http://groups.google.com/group/github/ -- Ask the community for help
+* "GitHub Status":http://twitter.com/github -- Is GitHub down, or is it just me?
+
+h3. Git
+
+* "Pro git":http://progit.org/
+* "git-scm":http://git-scm.com/
+* "git man pages":http://www.kernel.org/pub/software/scm/git/docs/ -- In-depth documentation for every git command.
+* "git user's manual":http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+* "Learn.GitHub":http://learn.github.com -- Git tutorials for beginners and experts.
+* "git ready":http://www.gitready.com/ -- Little tips and hints for using git.

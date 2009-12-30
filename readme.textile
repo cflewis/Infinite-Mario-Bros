@@ -1,0 +1,1 @@
+All submissions are welcome.  To submit a guide, fork this repo, add your guide, and open a ticket on "tekkub's fork":http://github.com/tekkub/help.github.com/issues
