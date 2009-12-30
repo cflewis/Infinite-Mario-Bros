@@ -1,0 +1,12 @@
+*.class
+.DS_Store
+.git
+test/*
+work/*
+target/*
+.settings/*
+*~
+.project
+.classpath
+._site
+index.markdown
