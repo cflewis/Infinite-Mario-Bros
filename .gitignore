@@ -8,4 +8,5 @@ target/*
 *~
 .project
 .classpath
-.site
+._site
+index.markdown
