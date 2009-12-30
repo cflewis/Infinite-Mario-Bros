@@ -4,9 +4,11 @@
 test/*
 work/*
 target/*
+target
 .settings/*
 *~
 .project
 .classpath
-._site
+_site
+_site/*
 index.markdown
