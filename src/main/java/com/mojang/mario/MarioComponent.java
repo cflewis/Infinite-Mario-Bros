@@ -89,6 +89,14 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
         {
             useScale2x = !useScale2x;
         }
+        
+ 		if (isPressed && keyCode == KeyEvent.VK_ESCAPE){
+			try {
+				System.exit(1);
+			} catch(Exception e) {
+				System.out.println("Unable to exit.");
+			}
+		}       
     }
 
     public void paint(Graphics g)
@@ -117,6 +125,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
     public void run()
     {
         graphicsConfiguration = getGraphicsConfiguration();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         //      scene = new LevelScene(graphicsConfiguration);
         mapScene = new MapScene(graphicsConfiguration, this, new Random().nextLong());
@@ -201,11 +210,11 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
             {
                 if (useScale2x)
                 {
-                    g.drawImage(scale2x.scale(image), 0, 0, null);
+                    g.drawImage(scale2x.scale(image), 0, 0, screenSize.width, screenSize.height, null);
                 }
                 else
                 {
-                    g.drawImage(image, 0, 0, 640, 480, null);
+                    g.drawImage(image, 0, 0, screenSize.width, screenSize.height, null);
                 }
             }
             else
@@ -315,8 +324,8 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
    }
     
     public void adjustFPS() {
-        int fps = 24;
+        int fps =24;
         delay = (fps > 0) ? (fps >= 100) ? 0 : (1000 / fps) : 100;
-//        System.out.println("Delay: " + delay);
+        //System.out.println("Delay: " + delay);
     }
 }
