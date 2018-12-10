@@ -125,7 +125,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
     public void run()
     {
         graphicsConfiguration = getGraphicsConfiguration();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 
         //      scene = new LevelScene(graphicsConfiguration);
         mapScene = new MapScene(graphicsConfiguration, this, new Random().nextLong());
@@ -195,13 +195,13 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
             alpha = 0;
             scene.render(og, alpha);
 
-            if (!this.hasFocus() && lTick/4%2==0)
+            /*if (!this.hasFocus() && lTick/4%2==0)
             {
                 String msg = "CLICK TO PLAY";
 
                 drawString(og, msg, 160 - msg.length() * 4 + 1, 110 + 1, 0);
                 drawString(og, msg, 160 - msg.length() * 4, 110, 7);
-            }
+            }*/
             og.setColor(Color.BLACK);
             /*          drawString(og, "FPS: " + fps, 5, 5, 0);
              drawString(og, "FPS: " + fps, 4, 4, 7);*/
@@ -210,11 +210,11 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
             {
                 if (useScale2x)
                 {
-                    g.drawImage(scale2x.scale(image), 0, 0, screenSize.width, screenSize.height, null);
+                    g.drawImage(scale2x.scale(image), 0, 0, width, height, null);
                 }
                 else
                 {
-                    g.drawImage(image, 0, 0, screenSize.width, screenSize.height, null);
+                    g.drawImage(image, 0, 0, width, height, null);
                 }
             }
             else
