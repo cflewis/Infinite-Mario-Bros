@@ -25,6 +25,15 @@ jar cfm infinitemariobros.jar manifest.txt -C ./infinitemariobros .
 mv infinitemariobros.jar ./dist
 rm -rf infinitemariobros
 
+echo "#!/bin/bash" > ./dist/infinitemariobros
+echo 'MAINCLASS="com.mojang.mario.FrameLauncher"' >> ./dist/infinitemariobros
+echo 'OPTION=$1"s"' >> ./dist/infinitemariobros
+echo 'if [ "$OPTION" == "fs" ]; then' >> ./dist/infinitemariobros
+echo     'MAINCLASS="com.mojang.mario.FullScreenFrameLauncher"' >> ./dist/infinitemariobros
+echo 'fi' >> ./dist/infinitemariobros
+echo 'java -cp .:infinitemariobros.jar $MAINCLASS' >> ./dist/infinitemariobros
+chmod +x ./dist/infinitemariobros
+
 
 
 
