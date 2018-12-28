@@ -163,3 +163,7 @@ the deb file should be one level above the current directory.
 
 ../infinitemariobros_1.0_all.deb
 
+Install
+```bash
+sudo dpkg -i infinitemariobros_1.0_all.deb
+```
