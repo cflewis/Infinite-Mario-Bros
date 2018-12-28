@@ -69,10 +69,97 @@ or
 infinitemariobros f
 ```
 
+or
+
+```bash
+java -jar infinitemariobros.jar
+```
+or
+
+```bash
+java -cp .:infinitemariobros.jar com.mojang.mario.FullScreenFrameLauncher
+```
+
 
 * With java jdk
 
 If you only wish to install the minimum, then all you need is a JDK to compile and run it.<br>
-On windows make sure the jd
+On windows make sure the jdk is in your path.
 
+Under linux and Mac you should only need the makeit script. If the script isn't executable, do the following.<br>
+Make executable.
+```bash
+chmod +x makeit
+```
+Compile 
+```bash
+./makeit
+cd dist
+```
+Run
+```bash
+infinitemariobros
+```
+or 
+```bash
+infinitemariobros f
+```
+
+or
+
+```bash
+java -jar infinitemariobros.jar
+```
+or
+
+```bash
+java -cp .:infinitemariobros.jar com.mojang.mario.FullScreenFrameLauncher
+```
+
+On windows you should just have to double click on the makeit.bat file. I think you could double click on the
+jar file and it will start. You can always issue the commands from the command prompt. I still need to make a batch script that
+will run the game in full screen  mode.
+
+Compile 
+```windows
+makeit
+```
+Run
+```windows
+java -jar infinitemariobros.jar
+```
+or
+
+```windows
+java -cp .;infinitemariobros.jar com.mojang.mario.FullScreenFrameLauncher
+```
+
+
+Making a debian package
+-----------------------
+
+You'll need gnu make, a jdk and the following additional dependencies.
+
+devscripts
+debhelper
+jarwrapper
+
+If you don't hae these installed, this worked for me.
+
+```bash
+sudo apt-get install devscripts debhelper jarwrapper
+```
+
+Once installed, make the "make_deb_package" script executable and run it.
+
+```bash
+chmod +x make_deb_package
+./make_deb_package
+```
+
+If all goes well, this will produce an installable deb package on ubuntu and possibly other debian based systems.
+
+the deb file should be one level above the current directory.
+
+../infinitemariobros_1.0_all.deb
 
