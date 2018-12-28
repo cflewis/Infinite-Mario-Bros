@@ -212,8 +212,7 @@ deb:
 	
 	cp changelog $(DESTDIR_B4)/changelog
 	cp copyright $(DESTDIR_B4)/copyright
-	cp LICENSE $(DESTDIR_B4)/LICENSE
-	cp license.txt $(DESTDIR_B4)
+	#cp LICENSE $(DESTDIR_B4)/LICENSE
 
 makescript:
 	echo "#!/bin/bash" > ./dist/$(JPACKAGE)
