@@ -29,7 +29,7 @@ mvn package
 cd target
 java -jar Mario-1.0-jar-with-dependencies.jar
 ```
-* With gnu make
+* With gnu make<br>
 If you don't have make installed, this worked for me.
 
 ```bash
