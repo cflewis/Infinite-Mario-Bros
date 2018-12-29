@@ -167,3 +167,12 @@ Install
 ```bash
 sudo dpkg -i infinitemariobros_1.0_all.deb
 ```
+
+Problems with OpenJDK on Ubuntu 14.04 and 16.04
+-----------------------------------------------
+Under Ubuntu 14.04 and 16.04 the graphics are not rendered correctly at the window edges when when running the game with an OpenJDK from the
+Ubuntu repositories. However, everything works as it should when using a downloaded OpenJDK binary from https://openjdk.java.net .<br>
+Everything works fine on these two distributions if you run the game with the a JRE provided by Oracle even if compiled with OpenJDK.
+<br>
+This is not an issue with an OpenJDK from the Ubuntu 18.04 repositories.
+
