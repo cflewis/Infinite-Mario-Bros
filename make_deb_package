@@ -1,0 +1,3 @@
+#!/bin/bash
+make deb DESTDIR=debian/infinitemariobros
+debuild -us -uc -I

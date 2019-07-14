@@ -1,0 +1,41 @@
+#!/bin/bash
+if [ -d "infinitemariobros" ]; then
+    rm -rf infinitemariobros
+fi
+
+if [ -d "dist" ]; then
+    rm -rf dist
+fi   
+
+mkdir infinitemariobros
+mkdir dist
+
+javac -source 1.6 -target 1.6 -d \
+./infinitemariobros ./src/main/java/com/mojang/mario/*.java \
+./src/main/java/com/mojang/mario/level/*.java \
+./src/main/java/com/mojang/mario/mapedit/*.java \
+./src/main/java/com/mojang/mario/sprites/*.java \
+./src/main/java/com/mojang/sonar/*.java \
+./src/main/java/com/mojang/sonar/mixer/*.java \
+./src/main/java/com/mojang/sonar/sample/*.java
+
+cp -R ./src/main/resources/* ./infinitemariobros
+
+jar cfm infinitemariobros.jar manifest.txt -C ./infinitemariobros .
+mv infinitemariobros.jar ./dist
+rm -rf infinitemariobros
+
+echo "#!/bin/bash" > ./dist/infinitemariobros
+echo 'MAINCLASS="com.mojang.mario.FrameLauncher"' >> ./dist/infinitemariobros
+echo 'OPTION=$1"s"' >> ./dist/infinitemariobros
+echo 'if [ "$OPTION" == "fs" ]; then' >> ./dist/infinitemariobros
+echo     'MAINCLASS="com.mojang.mario.FullScreenFrameLauncher"' >> ./dist/infinitemariobros
+echo 'fi' >> ./dist/infinitemariobros
+echo 'java -cp .:infinitemariobros.jar $MAINCLASS' >> ./dist/infinitemariobros
+chmod +x ./dist/infinitemariobros
+
+
+
+
+
+
